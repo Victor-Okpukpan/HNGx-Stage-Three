@@ -36,6 +36,11 @@ export default function ImageGallery({ images }) {
     setDraggedIndex(index);
   };
 
+  const handleTouchStart = (e, index) => {
+    // Store the index of the touched element for touch-based drag-and-drop
+    setDraggedIndex(index);
+  };
+
   const handleDragEnd = () => {
     setDraggedIndex(null);
   };
@@ -122,6 +127,7 @@ export default function ImageGallery({ images }) {
               <div
                 key={image.id}
                 draggable
+                onTouchStart={(e) => handleTouchStart(e, index)}
                 onDragStart={(e) => handleDragStart(e, index)}
                 onDragEnd={handleDragEnd}
                 onDragOver={handleDragOver}
