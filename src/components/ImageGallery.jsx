@@ -15,20 +15,18 @@ import { useState, useEffect } from "react";
  */
 
 export default function ImageGallery({ images }) {
-  const [imageOrder, setImageOrder] = useState(images);
+  const [imageOrder, setImageOrder] = useState(images || []);
   const [draggedIndex, setDraggedIndex] = useState(null);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState(""); // New state for the search term
-  const [filteredImages, setFilteredImages] = useState([]);
+  const [filteredImages, setFilteredImages] = useState(images || []);
   const [noResults, setNoResults] = useState(false);
 
   useEffect(() => {
     // Simulate loading delay
     const delay = setTimeout(() => {
-      setImageOrder(images);
-      setFilteredImages(images);
       setLoading(false);
-    }, 2000);
+    }, 2500);
 
     return () => clearTimeout(delay);
   }, [images]);
