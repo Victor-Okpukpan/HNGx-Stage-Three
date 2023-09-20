@@ -19,7 +19,7 @@ export default async function GalleryPage() {
   await loginIsRequiredServer();
 
   return (
-    <div className="max-w-screen-lg mx-auto px-3 xl:px-0">
+    <div className="max-w-screen-lg mx-auto px-3 xl:px-0 w-full h-full">
       <header className="flex items-center space-x-5 justify-between py-2">
         <p className="sm:text-lg font-medium">Welcome to the Gallery, {session?.user.name}.</p>
         <LogOutButton />
@@ -27,7 +27,7 @@ export default async function GalleryPage() {
 
       <p className="text-sm mt-10 text-gray-500">You can search for images with the following tags: Animals, Arts, Beauty, Buildings, Flowers, Furniture, Landscape, Utensils.</p>
 
-      <section className="pt-10">
+      <section className="pt-10 w-full h-full">
         <ImageGallery images={images} />
       </section>
 

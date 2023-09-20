@@ -110,7 +110,7 @@ export default function ImageGallery({ images }) {
         />
       </div>
       {loading ? (
-        <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-3 gap-2 md:gap-5">
+        <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-3 gap-2 md:gap-5 w-full h-full">
           {Array.from({ length: 9 }).map((_, index) => (
             <div
               key={index}
