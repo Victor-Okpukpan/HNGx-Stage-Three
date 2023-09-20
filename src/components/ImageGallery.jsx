@@ -17,7 +17,7 @@ import { useState, useEffect } from "react";
 export default function ImageGallery({ images }) {
   const [imageOrder, setImageOrder] = useState(images || []);
   const [draggedIndex, setDraggedIndex] = useState(null);
-  const [draggedImage, setDraggedImage] = useState(null);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(null);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState(""); // New state for the search term
   const [filteredImages, setFilteredImages] = useState(images || []);
@@ -36,20 +36,22 @@ export default function ImageGallery({ images }) {
     e.dataTransfer.setData("imageIndex", index);
     setDraggedIndex(index);
   };
-  const handleImageClick = (index) => {
-    // Handle the click event by setting the dragged image
-    setDraggedImage(index);
+  const handleImageTap = (index) => {
+    setSelectedImageIndex(index);
   };
 
-  const handleImageDrop = (targetIndex) => {
-    if (draggedImage === null || draggedImage === targetIndex) return;
+  const handleMoveTap = (targetIndex) => {
+    if (selectedImageIndex === null || selectedImageIndex === targetIndex) {
+      setSelectedImageIndex(null);
+      return;
+    }
 
     const updatedImageOrder = [...filteredImages];
-    const [draggedImageObj] = updatedImageOrder.splice(draggedImage, 1);
-    updatedImageOrder.splice(targetIndex, 0, draggedImageObj);
+    const [selectedImage] = updatedImageOrder.splice(selectedImageIndex, 1);
+    updatedImageOrder.splice(targetIndex, 0, selectedImage);
 
     setFilteredImages(updatedImageOrder);
-    setDraggedImage(null);
+    setSelectedImageIndex(null);
   };
   const handleTouchStart = (index) => {
     setDraggedIndex(index);
@@ -146,8 +148,8 @@ export default function ImageGallery({ images }) {
               <div
                 key={image.id}
                 draggable
-                onClick={() => handleImageClick(index)}
-                onDoubleClick={() => handleImageDrop(index)}
+                onClick={() => handleImageTap(index)}
+                onDoubleClick={() => handleMoveTap(index)}
                 onTouchStart={() => handleTouchStart(index)}
                 onTouchEnd={handleTouchEnd}
                 onDragStart={(e) => handleDragStart(e, index)}
