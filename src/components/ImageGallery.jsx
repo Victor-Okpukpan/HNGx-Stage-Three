@@ -17,9 +17,8 @@ import { useState, useEffect } from "react";
 export default function ImageGallery({ images }) {
   const [imageOrder, setImageOrder] = useState(images || []);
   const [draggedIndex, setDraggedIndex] = useState(null);
-  const [selectedImageIndex, setSelectedImageIndex] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState(""); // New state for the search term
+  const [searchTerm, setSearchTerm] = useState("");
   const [filteredImages, setFilteredImages] = useState(images || []);
   const [noResults, setNoResults] = useState(false);
 
@@ -36,23 +35,7 @@ export default function ImageGallery({ images }) {
     e.dataTransfer.setData("imageIndex", index);
     setDraggedIndex(index);
   };
-  const handleImageTap = (index) => {
-    setSelectedImageIndex(index);
-  };
-
-  const handleMoveTap = (targetIndex) => {
-    if (selectedImageIndex === null || selectedImageIndex === targetIndex) {
-      setSelectedImageIndex(null);
-      return;
-    }
-
-    const updatedImageOrder = [...filteredImages];
-    const [selectedImage] = updatedImageOrder.splice(selectedImageIndex, 1);
-    updatedImageOrder.splice(targetIndex, 0, selectedImage);
-
-    setFilteredImages(updatedImageOrder);
-    setSelectedImageIndex(null);
-  };
+  
   const handleTouchStart = (index) => {
     setDraggedIndex(index);
   };
@@ -60,7 +43,6 @@ export default function ImageGallery({ images }) {
   const handleTouchEnd = () => {
     setDraggedIndex(null);
   };
-
 
   const handleDragEnd = () => {
     setDraggedIndex(null);
@@ -148,8 +130,6 @@ export default function ImageGallery({ images }) {
               <div
                 key={image.id}
                 draggable
-                onClick={() => handleImageTap(index)}
-                onDoubleClick={() => handleMoveTap(index)}
                 onTouchStart={() => handleTouchStart(index)}
                 onTouchEnd={handleTouchEnd}
                 onDragStart={(e) => handleDragStart(e, index)}
